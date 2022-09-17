@@ -11,7 +11,7 @@ const logLevels = {
     trace : 5,
 };
 
-const  logger = winston.createLogger({
+const logger = winston.createLogger({
     levels: logLevels,
     format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
     defaultMeta: { service: "apis"},
@@ -21,12 +21,46 @@ const  logger = winston.createLogger({
     ],
 });
 
+const loggerThirdParty = winston.createLogger({
+    levels: logLevels,
+    format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+    defaultMeta: { service: "third party"},
+    transports : [ 
+        new winston.transports.File({ filename: "error.thirdParty.log", level: "error" }),
+        new winston.transports.File({ filename: "complete.thirdParty.log" })
+    ],
+});
+
+
+const testLogger = winston.createLogger({
+    levels: logLevels,
+    format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+    defaultMeta: { service: "test reports"},
+    transports : [ 
+        new winston.transports.File({ filename: "test.reports.log" })
+    ],
+});
+
+testLogger.add(
+    new winston.transports.Console({
+        format: winston.format.combine(winston.format.timestamp(), winston.format.json())
+    })
+);
+
 if(variables.NODE_ENV != "prod"){
     logger.add(
         new winston.transports.Console({
             format: winston.format.combine(winston.format.timestamp(), winston.format.json())
         })
     );
+
+    loggerThirdParty.add(
+        new winston.transports.Console({
+            format: winston.format.combine(winston.format.timestamp(), winston.format.json())
+        })
+    );
+
 }
 
-export {logger};
+
+export {logger, loggerThirdParty, testLogger};
