@@ -3,7 +3,7 @@ import { variables } from "../utility/secrets.utility.js";
 import { logger } from "../utility/logger.utility.js"
 
 const options = {
-	autoIndex: false,
+	// autoIndex: false,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 };

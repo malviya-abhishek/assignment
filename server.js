@@ -32,6 +32,7 @@ videoRoutesConfig(app);
 
 
 app.listen( variables.PORT, ()=>{
-    periodicYoutubeApiCaller("cricket").start();
+    // commented  to avoid using daily quota
+    // periodicYoutubeApiCaller("cricket").start();
     logger.info("Server started at " + variables.PORT)
 });

@@ -7,13 +7,20 @@ export async function getVideo(req, res) {
     let pageSize = req.query.pageSize ? req.query.pageSize : 10;
     let search = req.query.search ? req.query.search : null;
 
-    console.log(page, pageSize, search);
+    let videos = null;
 
-    const videos = await Video
-        .find()
-        .sort({publishingDateTime : 'asc'})
-        .skip(pageSize*page)
-        .limit(pageSize);
+    if(search !== null){
+        videos = await Video.fuzzySearch({
+            query : search
+        }).sort({ publishingDateTime: 'asc' });
+    }
+    else{
+        videos = await Video
+            .find()
+            .sort({publishingDateTime : 'asc'})
+            .skip(pageSize*page)
+            .limit(pageSize);
+    }
     
     res.status(200).json({
         videos
