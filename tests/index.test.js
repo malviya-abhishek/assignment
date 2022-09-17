@@ -1,14 +1,18 @@
-import {youtubeApiServiceTest} from "./youtubeApi.service.test.js"
-import {periodicYouTubeApiCallerTest} from "./periodicYoutubeCaller.test.js"
 import { testLogger } from "../app/utility/logger.utility.js";
 
+import {youtubeApiServiceTest} from "./youtubeApi.service.test.js"
+import {periodicYouTubeApiCallerTest} from "./periodicYoutubeCaller.test.js"
+import { saveVideoTest } from "./saveVideo.test.js"
 
-function runTests(){
-    let totalTest = 2;
+
+
+async function runTests(){
+    let totalTest = 0;
     let testPassed = 0;
 
-    if(youtubeApiServiceTest()) testPassed++;
-    if(periodicYouTubeApiCallerTest()) testPassed++;
+    if( await youtubeApiServiceTest() && ++totalTest ) testPassed++;
+    if( await periodicYouTubeApiCallerTest() && ++totalTest) testPassed++;
+    if( await saveVideoTest() && ++totalTest ) testPassed++;
     
     let result  = "Test passed "  + testPassed + " / " + totalTest;
     testLogger.info(result); 

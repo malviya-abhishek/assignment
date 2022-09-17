@@ -1,6 +1,27 @@
 import { google } from "googleapis";
-import { logger } from "../utility/logger.utility.js";
+import { loggerThirdParty } from "../utility/logger.utility.js";
 import moment  from "moment";
+
+function videoFormatter(rawVideos){
+    const videos = [];
+    rawVideos.forEach(rawVideo => {
+        videos.push({
+            title: rawVideo.snippet.title,
+            description: rawVideo.snippet.description,
+            channelId : rawVideo.snippet.channelId,
+            channelTitle : rawVideo.snippet.channelTitle,
+            publishingDateTime : rawVideo.snippet.publishedAt,
+            thumbnails : {
+                default : rawVideo.snippet.thumbnails.default,
+                medium : rawVideo.snippet.thumbnails.medium,
+                high: rawVideo.snippet.thumbnails.high
+            },
+            videoId : rawVideo.id.videoId
+        });
+    });
+    return videos;
+}
+
 
 async function getVideos(apiKey, searchQuery, maxResults = 50, publishedAfter){
     const youtubeService = google.youtube({
@@ -24,9 +45,10 @@ async function getVideos(apiKey, searchQuery, maxResults = 50, publishedAfter){
     try {
         const response = await youtubeService.search.list(searchOptions);
         const videos = response?.data?.items;
-        return videos;
+        loggerThirdParty.info("Video fetched from api");
+        return videoFormatter(videos);
     } catch (err) {
-        logger.error("Failed to fetch video", err);
+        loggerThirdParty.error("Failed to fetch video", err);
     }
 }
 

@@ -1,7 +1,7 @@
 import { periodicYoutubeApiCaller } from "../app/service/periodicYouTubeApiCaller.service.js";
 import {testLogger} from "../app/utility/logger.utility.js";
 
-function periodicYouTubeApiCallerTest(){
+async function periodicYouTubeApiCallerTest(){
     try {
         periodicYoutubeApiCaller("cricket").start();
         testLogger.info("periodic youtube api caller passed");

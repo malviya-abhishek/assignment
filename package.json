@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/malviya-abhishek/assignment#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "cron": "^2.1.0",
     "dotenv": "^16.0.2",
     "dotenv-defaults": "^5.0.2",
