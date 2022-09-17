@@ -1,10 +1,9 @@
+import { getVideo } from "../app/http/controller/video/video.controller.js";
 
 
 
 const routesConfig = function(app){
-    app.get("/videos", [ (req, res)=>{
-        res.send("aoiwjhdoiwj");
-    } ])
+    app.get("/videos", [getVideo])
 };
 
 

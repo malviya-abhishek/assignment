@@ -4,6 +4,7 @@ import { variables } from "./app/utility/secrets.utility.js";
 import { logger } from "./app/utility/logger.utility.js";
 import bodyParser  from "body-parser";
 import { routesConfig as videoRoutesConfig } from "./routes/routes.api.video.js";
+import { periodicYoutubeApiCaller } from "./app/service/periodicYouTubeApiCaller.service.js";
 
 const app = express();
 
@@ -31,5 +32,6 @@ videoRoutesConfig(app);
 
 
 app.listen( variables.PORT, ()=>{
+    periodicYoutubeApiCaller("cricket").start();
     logger.info("Server started at " + variables.PORT)
 });

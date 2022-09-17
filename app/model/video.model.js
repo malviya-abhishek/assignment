@@ -1,5 +1,9 @@
 import {mongoose} from "../service/mongoose.service.js";
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const mongooseFuzzySearching = require("mongoose-fuzzy-searching");
+
 const videoSchema = new mongoose.Schema({
     title: { type: String },
     description : {type : String},
@@ -26,6 +30,10 @@ const videoSchema = new mongoose.Schema({
     videoId : { type : String}
 },{
     timestamps : true
+});
+
+videoSchema.plugin( mongooseFuzzySearching, {
+    fields : ["title", "description"]
 });
 
 const Video = mongoose.model("Video", videoSchema);
