@@ -4,8 +4,13 @@ import { logger } from "../utility/logger.utility.js"
 
 const options = {
 	// autoIndex: false,
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
+	// useNewUrlParser: true,
+	// useUnifiedTopology: true,
+    // createIndexes : false
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
 };
 
 const connectWithRetry = ()=>{

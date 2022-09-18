@@ -4,7 +4,7 @@ import {getVideos} from "./youtubeApi.service.js";
 import {variables} from "../utility/secrets.utility.js";
 import {Video} from "../model/video.model.js";
 
-async function periodicFunHelper(searchQuery){
+export async function periodicFunHelper(searchQuery){
     loggerThirdParty.info("Periodic video fetcher running");
     try {
         const apiKeys = variables.YOUTUBE_APIKEY.split(",");
@@ -29,10 +29,8 @@ async function periodicFunHelper(searchQuery){
     }
 }
 
-function periodicYoutubeApiCaller(searchQuery){
+export function periodicYoutubeApiCaller(searchQuery){
     loggerThirdParty.info("periodicYoutubeApiCaller triggered");
     return new CronJob('* * * * * ', () => {  periodicFunHelper(searchQuery) } );
 }
 
-
-export {periodicYoutubeApiCaller, periodicFunHelper};

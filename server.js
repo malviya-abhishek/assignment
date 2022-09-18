@@ -4,7 +4,7 @@ import { variables } from "./app/utility/secrets.utility.js";
 import { logger } from "./app/utility/logger.utility.js";
 import bodyParser  from "body-parser";
 import { routesConfig as videoRoutesConfig } from "./routes/routes.api.video.js";
-import { periodicYoutubeApiCaller } from "./app/service/periodicYouTubeApiCaller.service.js";
+import { periodicYoutubeApiCaller } from "./app/service/periodicYoutubeApiCaller.service.js";
 
 const app = express();
 
@@ -25,7 +25,9 @@ app.use( (req, res, next)=>{
 
 
 app.get("/health-check", (req, res)=>{
-    res.status(200).send();
+    res.status(200).json({
+        "message" : "Working fine"
+    });
 });
 
 videoRoutesConfig(app);
@@ -33,6 +35,6 @@ videoRoutesConfig(app);
 
 app.listen( variables.PORT, ()=>{
     // commented  to avoid using daily quota
-    // periodicYoutubeApiCaller("cricket").start();
+    periodicYoutubeApiCaller("cricket").start();
     logger.info("Server started at " + variables.PORT)
 });

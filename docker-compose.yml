@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  # MongoDB service
+  mongo_db:
+    container_name: mongodb_container
+    image: mongo:latest
+    restart: always
+    volumes: 
+      - mongo_db:/data/db
+  
+  # NodeJs api service 
+  api:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      PORT: ${PORT}
+      MONGODB_URI: mongodb://mongo_db:27017/assignment
+      YOUTUBE_APIKEY: ${YOUTUBE_APIKEY}
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - mongo_db
+      
+volumes:
+  mongo_db: {}
