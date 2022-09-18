@@ -27,7 +27,10 @@ const videoSchema = new mongoose.Schema({
             height : {type : Number}
         }
     },
-    videoId : { type : String}
+    videoId : { 
+        type : String,
+        unique: true
+    }
 },{
     timestamps : true
 });
