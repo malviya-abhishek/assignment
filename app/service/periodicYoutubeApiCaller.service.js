@@ -18,8 +18,9 @@ export async function periodicFunHelper(searchQuery){
                 loggerThirdParty.info("Videos saved");
                 fetched = true;
             } catch (error) {
+                // Check if error is due to duplicate videos
                 if(error.code == "11000"){
-                    loggerThirdParty.error("Duplicate file are handled");
+                    loggerThirdParty.info("Duplicate file are handled");
                     loggerThirdParty.info("Videos saved");
                     fetched = true;
                 }
