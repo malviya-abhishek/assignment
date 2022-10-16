@@ -29,7 +29,7 @@ const videoSchema = new mongoose.Schema({
     },
     videoId : { 
         type : String,
-        // unique: true
+        unique: true,
     }
 },{
     timestamps : true

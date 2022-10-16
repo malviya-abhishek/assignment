@@ -14,11 +14,17 @@ export async function periodicFunHelper(searchQuery){
                 if(fetched)
                     break;
                 let videos = await getVideos(key, searchQuery, 20);    
-                await Video.insertMany(videos);
+                await Video.insertMany(videos, {ordered:false, silent: true});
                 loggerThirdParty.info("Videos saved");
                 fetched = true;
             } catch (error) {
-                loggerThirdParty.error("Some problem while saving video", error);
+                if(error.code == "11000"){
+                    loggerThirdParty.error("Duplicate file are handled");
+                    loggerThirdParty.info("Videos saved");
+                    fetched = true;
+                }
+                else
+                    loggerThirdParty.error("Some problem while saving video", error);
             }
         }
         if(fetched === false)
