@@ -15,9 +15,9 @@ export async function getVideo(req, res) {
     try {
 
         totalCount = await Video.estimatedDocumentCount();
-        totalPages = Math.ceil(totalCount / pageSize);
+        totalPages = Math.ceil(totalCount / pageSize);  
 
-
+        
         if(search !== null){
             videos = await Video.fuzzySearch({
                 query : search
@@ -41,8 +41,9 @@ export async function getVideo(req, res) {
     
     
     res.status(200).json({
-        videos,
+        page,
         totalCount,
-        totalPages
+        totalPages,
+        videos
     });
 }
